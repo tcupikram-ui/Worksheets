@@ -17,6 +17,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Practice Hub">
 <link rel="manifest" href="manifest.webmanifest">
+<script>window.__dip=null;window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();window.__dip=e});</script>
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -318,24 +319,24 @@ let li=0; setInterval(()=>{ li=(li+1)%lines.length; const r=$('#rot'); r.style.o
 $('#rot').style.transition='opacity .3s';
 
 /* install */
-let deferred=null;
 const installState=$('#installState');
 const isStandalone=()=>window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone===true;
 
-window.addEventListener('beforeinstallprompt',e=>{ e.preventDefault(); deferred=e; });
-window.addEventListener('appinstalled',()=>{ deferred=null; installState.textContent='Practice Hub is installed. Open it from your home screen.'; toast('Installed.'); });
+window.addEventListener('beforeinstallprompt',e=>{ e.preventDefault(); window.__dip=e; });
+window.addEventListener('appinstalled',()=>{ window.__dip=null; installState.textContent='Practice Hub is installed. Open it from your home screen.'; toast('Installed.'); });
 
 function autoInstall(){
   if(isStandalone()){ installState.textContent='Practice Hub is already installed.'; return; }
+  const deferred=window.__dip;
   if(deferred){
     installState.textContent='Installing Practice Hub…';
     deferred.prompt();
     try{
       deferred.userChoice.then(r=>{
         if(r && r.outcome==='accepted') installState.textContent='Practice Hub is installed. Open it from your home screen.';
-        deferred=null;
-      }).catch(()=>{ deferred=null; });
-    }catch(e){ deferred=null; }
+        window.__dip=null;
+      }).catch(()=>{ window.__dip=null; });
+    }catch(e){ window.__dip=null; }
   } else {
     installState.textContent='Install is not available in this browser.';
   }

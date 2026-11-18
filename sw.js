@@ -1,5 +1,5 @@
 /* Practice Hub service worker — enables install & offline use */
-const CACHE = 'practice-hub-v1';
+const CACHE = 'practice-hub-v2';
 
 const CORE = [
   './',
@@ -15,7 +15,7 @@ const CORE = [
 self.addEventListener('install', (e) => {
   e.waitUntil(
     caches.open(CACHE)
-      .then((c) => c.addAll(CORE))
+      .then((c) => c.addAll(CORE).catch(() => {}))
       .then(() => self.skipWaiting())
   );
 });
