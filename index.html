@@ -1,11 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" translate="no" class="notranslate">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="google" content="notranslate">
+<meta name="googlebot" content="notranslate">
+<meta name="robots" content="notranslate">
 <title>Practice Hub · Worksheets</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@500;700&display=swap" rel="stylesheet">
+<meta name="description" content="Worksheets to practise English. Practice makes perfect — one worksheet at a time.">
+<meta name="theme-color" content="#071428">
+<meta name="application-name" content="Practice Hub">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Practice Hub">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Practice Hub">
+<meta property="og:title" content="Practice Hub · Worksheets">
+<meta property="og:description" content="Worksheets to practise English. Practice makes perfect — one worksheet at a time.">
+<meta property="og:url" content="https://worksheets.ikrambd.com/">
+<meta property="og:image" content="https://worksheets.ikrambd.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Practice Hub — Worksheets to practise English">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Practice Hub · Worksheets">
+<meta name="twitter:description" content="Worksheets to practise English.">
+<meta name="twitter:image" content="https://worksheets.ikrambd.com/og-image.png">
 <style>
 :root{
   --ink:#04060d; --night:#071428; --navy:#0d2a52; --blue:#1f64b8; --sky:#6fb4ee; --ice:#dcecfa;
@@ -115,11 +142,37 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offse
 
 .toast{position:fixed;left:50%;bottom:calc(22px + env(safe-area-inset-bottom,0px));transform:translate(-50%,30px);opacity:0;z-index:9;background:#fff;color:#04101f;font-weight:800;padding:12px 20px;border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,.5);transition:.35s;pointer-events:none;max-width:90vw;text-align:center}
 .toast.on{opacity:1;transform:translate(-50%,0)}
+.hint{color:var(--muted);font-size:.92rem;line-height:1.5;margin:10px 0 0}
+.share-btn{display:inline-flex;align-items:center;justify-content:center;font:800 .92rem "Nunito",sans-serif;color:#fff;text-decoration:none;border:0;border-radius:12px;padding:11px 16px;cursor:pointer;transition:transform .18s,box-shadow .18s;box-shadow:0 6px 16px rgba(0,0,0,.25)}
+.share-btn:hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(0,0,0,.32)}
+.share-btn.fb{background:#1877f2}
+.share-btn.tw{background:#14171a}
+.share-btn.li{background:#0a66c2}
+.share-btn.pi{background:#e60023}
+.share-btn.wa{background:#25d366;color:#0a1c38}
+.share-btn.tg{background:#229ed9}
+.share-btn.em{background:#ea4335}
+.splash{position:fixed;inset:0;z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;background:radial-gradient(700px 500px at 70% 0%,#15488f 0%,transparent 60%),linear-gradient(180deg,var(--night),var(--ink));background-color:var(--ink);transition:opacity .6s ease,visibility .6s ease}
+.splash .logo{width:108px;height:108px;border-radius:26px;object-fit:cover;box-shadow:0 0 0 2px rgba(255,255,255,.18),0 16px 44px rgba(31,100,184,.5);animation:pop .5s cubic-bezier(.2,.9,.3,1.2)}
+.splash .nm{font-family:"Baloo 2",sans-serif;font-weight:800;font-size:1.7rem;color:#fff}
+.splash .tag{color:var(--sky);font-weight:700;font-size:.95rem;letter-spacing:.06em}
+.splash .dots{display:flex;gap:7px;margin-top:4px}
+.splash .dots i{width:8px;height:8px;border-radius:50%;background:var(--gold);animation:bounce 1s ease-in-out infinite}
+.splash .dots i:nth-child(2){background:var(--sky);animation-delay:.15s}
+.splash .dots i:nth-child(3){background:var(--mint);animation-delay:.3s}
+@keyframes bounce{50%{transform:translateY(-7px);opacity:.5}}
+.splash.off{opacity:0;visibility:hidden}
 @media (max-width:520px){header{align-items:flex-start}.frame{width:92px}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
+<div class="splash" id="splash" aria-hidden="true">
+  <img class="logo" src="icon-192.png" alt="Practice Hub logo" width="108" height="108">
+  <div class="nm">Practice Hub</div>
+  <div class="tag">Worksheets</div>
+  <div class="dots"><i></i><i></i><i></i></div>
+</div>
 <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div><div class="blob b4"></div>
 <div class="wrap">
   <header>
@@ -144,12 +197,13 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offse
   <section class="panel" id="install" hidden>
     <div class="card">
       <h2>Install the app</h2>
-      <p>Keep the hub on your home screen and open it like any other app.</p>
-      <div class="row"><button class="btn" id="installBtn">Install now</button></div>
-      <ol class="steps" id="steps">
-        <li><b>iPhone or iPad:</b> tap Share in Safari, then Add to Home Screen.</li>
-        <li><b>Android:</b> open the browser menu, then tap Install app.</li>
-        <li><b>Computer:</b> click the install icon in the address bar.</li>
+      <p>Keep the hub on your home screen and open it like any other app — even offline.</p>
+      <div class="row"><button class="btn" id="installBtn">Install Practice Hub</button></div>
+      <p class="hint" id="installState">Checking install options…</p>
+      <ol class="steps">
+        <li><b>iPhone / iPad:</b> in Safari tap <b>Share</b>, then <b>Add to Home Screen</b>.</li>
+        <li><b>Android:</b> tap the <b>⋮</b> menu, then <b>Add to Home screen</b> or <b>Install app</b>.</li>
+        <li><b>Computer:</b> click the install icon in the address bar (Chrome / Edge).</li>
       </ol>
     </div>
   </section>
@@ -157,14 +211,18 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offse
   <section class="panel" id="share" hidden>
     <div class="card">
       <h2>Share the hub</h2>
-      <p>Send the link to your students, colleagues or friends.</p>
-      <div class="link"><input id="url" readonly aria-label="Hub link"><button class="btn alt" id="copy">Copy</button></div>
+      <p>Send the link to your students, colleagues or friends on any platform.</p>
+      <div class="link"><input id="url" readonly aria-label="Hub link"><button class="btn alt" id="copy">Copy link</button></div>
       <div class="row">
-        <button class="btn" id="native">Share…</button>
-        <a class="btn alt" id="wa" target="_blank" rel="noopener">WhatsApp</a>
-        <a class="btn alt" id="tg" target="_blank" rel="noopener">Telegram</a>
-        <a class="btn alt" id="mail">Email</a>
+        <a class="share-btn fb" id="fb" target="_blank" rel="noopener">Facebook</a>
+        <a class="share-btn tw" id="tw" target="_blank" rel="noopener">X</a>
+        <a class="share-btn li" id="li" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="share-btn pi" id="pi" target="_blank" rel="noopener">Pinterest</a>
+        <a class="share-btn wa" id="wa" target="_blank" rel="noopener">WhatsApp</a>
+        <a class="share-btn tg" id="tg" target="_blank" rel="noopener">Telegram</a>
+        <a class="share-btn em" id="mail">Email</a>
       </div>
+      <div class="row"><button class="btn" id="native">Share…</button></div>
     </div>
   </section>
 </div>
@@ -219,7 +277,18 @@ $('#count').textContent=TOTAL;
 
 /* tabs */
 const tabs=[...document.querySelectorAll('nav button')];
+const sndOpen=new Audio('tab-open.mp3');
+const sndClose=new Audio('tab-close.mp3');
+sndOpen.preload='auto'; sndClose.preload='auto';
+let currentTab='ws';
+function playSound(snd){
+  try{ snd.currentTime=0; const p=snd.play(); if(p && p.catch) p.catch(()=>{}); }catch(e){}
+}
 function show(id){
+  if(id===currentTab) return;
+  playSound(sndClose);
+  setTimeout(()=>playSound(sndOpen), 90);
+  currentTab=id;
   tabs.forEach(t=>t.setAttribute('aria-selected',t.dataset.tab===id));
   document.querySelectorAll('.panel').forEach(p=>p.hidden=p.id!==id);
 }
@@ -232,28 +301,64 @@ $('#rot').style.transition='opacity .3s';
 
 /* install */
 let deferred=null;
-window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferred=e;});
-window.addEventListener('appinstalled',()=>toast('Installed. Open it from your home screen.'));
-$('#installBtn').onclick=async()=>{
-  if(deferred){ deferred.prompt(); try{await deferred.userChoice}catch(e){} deferred=null; }
+const installBtn=$('#installBtn');
+const installState=$('#installState');
+const isStandalone=()=>window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone===true;
+const isIOS=/iphone|ipad|ipod/i.test(navigator.userAgent) && !window.MSStream;
+
+function updateInstallUI(){
+  if(isStandalone()){ installBtn.style.display='none'; installState.textContent='Practice Hub is installed. Open it from your home screen.'; return; }
+  if(deferred){ installState.textContent='Ready to install on this device.'; }
+  else if(isIOS){ installState.textContent='On iPhone / iPad, use the steps below to add it to your Home Screen.'; }
+  else { installState.textContent='Use the steps below for your device.'; }
+}
+
+window.addEventListener('beforeinstallprompt',e=>{ e.preventDefault(); deferred=e; updateInstallUI(); });
+window.addEventListener('appinstalled',()=>{ deferred=null; toast('Installed. Open it from your home screen.'); updateInstallUI(); });
+
+installBtn.onclick=async()=>{
+  if(deferred){
+    deferred.prompt();
+    try{ const r=await deferred.userChoice; if(r && r.outcome==='accepted') toast('Installing…'); }catch(e){}
+    deferred=null; updateInstallUI();
+  }
+  else if(isIOS){ toast('Tap Share in Safari, then “Add to Home Screen”.'); }
   else { toast('Use the steps below for your device.'); }
 };
+updateInstallUI();
 
 /* share */
-let href=''; try{href=location.href.split('#')[0]}catch(e){}
+const CANONICAL='https://worksheets.ikrambd.com/';
+let href=''; try{ href=location.href.split('#')[0]; }catch(e){}
+if(!href || href==='about:blank') href=CANONICAL;
 $('#url').value=href;
-const msg='Practice Hub: worksheets to practise English. ';
-$('#wa').href='https://wa.me/?text='+encodeURIComponent(msg+href);
-$('#tg').href='https://t.me/share/url?url='+encodeURIComponent(href)+'&text='+encodeURIComponent(msg);
-$('#mail').href='mailto:?subject='+encodeURIComponent('Practice Hub')+'&body='+encodeURIComponent(msg+href);
+const TITLE='Practice Hub · Worksheets';
+const shareText='Practice Hub: worksheets to practise English. ';
+const eu=encodeURIComponent, euHref=eu(href), euTitle=eu(TITLE);
+
+$('#fb').href='https://www.facebook.com/sharer/sharer.php?u='+euHref;
+$('#tw').href='https://twitter.com/intent/tweet?url='+euHref+'&text='+eu(shareText);
+$('#li').href='https://www.linkedin.com/sharing/share-offsite/?url='+euHref;
+$('#pi').href='https://pinterest.com/pin/create/button/?url='+euHref+'&description='+eu(shareText);
+$('#wa').href='https://wa.me/?text='+eu(shareText+href);
+$('#tg').href='https://t.me/share/url?url='+euHref+'&text='+eu(shareText);
+$('#mail').href='mailto:?subject='+eu(TITLE)+'&body='+eu(shareText+'\n'+href);
+
 $('#copy').onclick=async()=>{
   try{ await navigator.clipboard.writeText(href); toast('Link copied.'); }
-  catch(e){ $('#url').select(); try{document.execCommand('copy'); toast('Link copied.');}catch(_){ toast('Select the link and copy it.'); } }
+  catch(e){ const u=$('#url'); u.select(); u.setSelectionRange(0,99999); try{document.execCommand('copy'); toast('Link copied.');}catch(_){ toast('Select the link and copy it.'); } }
 };
 $('#native').onclick=async()=>{
-  try{ if(navigator.share){ await navigator.share({title:'Practice Hub',text:msg,url:href}); } else { $('#copy').click(); } }
+  try{ if(navigator.share){ await navigator.share({title:TITLE,text:shareText,url:href}); } else { $('#copy').click(); } }
   catch(e){}
 };
+
+/* splash + service worker */
+window.addEventListener('load',()=>{
+  const s=$('#splash');
+  if(s){ setTimeout(()=>{ s.classList.add('off'); setTimeout(()=>s.remove(),650); },1100); }
+  if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js').catch(()=>{}); }
+});
 </script>
 </body>
 </html>
