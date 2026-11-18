@@ -11,11 +11,11 @@
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@500;700&display=swap" rel="stylesheet">
 <meta name="description" content="Worksheets to practise English. Practice makes perfect — one worksheet at a time.">
 <meta name="theme-color" content="#071428">
-<meta name="application-name" content="Practice Hub">
+<meta name="application-name" content="Worksheets">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Practice Hub">
+<meta name="apple-mobile-web-app-title" content="Worksheets">
 <link rel="manifest" href="manifest.webmanifest">
 <script>window.__dip=null;window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();window.__dip=e});</script>
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
@@ -204,7 +204,7 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offse
   <section class="panel" id="install" hidden>
     <div class="card">
       <h2>Install the app</h2>
-      <p id="installState">Installing Practice Hub…</p>
+      <p id="installState">Installing Worksheets…</p>
     </div>
   </section>
 
@@ -323,17 +323,17 @@ const installState=$('#installState');
 const isStandalone=()=>window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone===true;
 
 window.addEventListener('beforeinstallprompt',e=>{ e.preventDefault(); window.__dip=e; });
-window.addEventListener('appinstalled',()=>{ window.__dip=null; installState.textContent='Practice Hub is installed. Open it from your home screen.'; toast('Installed.'); });
+window.addEventListener('appinstalled',()=>{ window.__dip=null; installState.textContent='Worksheets is installed. Open it from your home screen.'; toast('Installed.'); });
 
 function autoInstall(){
-  if(isStandalone()){ installState.textContent='Practice Hub is already installed.'; return; }
+  if(isStandalone()){ installState.textContent='Worksheets is already installed.'; return; }
   const deferred=window.__dip;
   if(deferred){
-    installState.textContent='Installing Practice Hub…';
+    installState.textContent='Installing Worksheets…';
     deferred.prompt();
     try{
       deferred.userChoice.then(r=>{
-        if(r && r.outcome==='accepted') installState.textContent='Practice Hub is installed. Open it from your home screen.';
+        if(r && r.outcome==='accepted') installState.textContent='Worksheets is installed. Open it from your home screen.';
         window.__dip=null;
       }).catch(()=>{ window.__dip=null; });
     }catch(e){ window.__dip=null; }
