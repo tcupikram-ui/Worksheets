@@ -6,7 +6,7 @@
 <meta name="google" content="notranslate">
 <meta name="googlebot" content="notranslate">
 <meta name="robots" content="notranslate">
-<title>Practice Hub · Worksheets</title>
+<title>Worksheets</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@500;700&display=swap" rel="stylesheet">
 <meta name="description" content="Worksheets to practise English. Practice makes perfect — one worksheet at a time.">
@@ -22,16 +22,16 @@
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="Practice Hub">
-<meta property="og:title" content="Practice Hub · Worksheets">
+<meta property="og:site_name" content="Worksheets">
+<meta property="og:title" content="Worksheets">
 <meta property="og:description" content="Worksheets to practise English. Practice makes perfect — one worksheet at a time.">
 <meta property="og:url" content="https://worksheets.ikrambd.com/">
 <meta property="og:image" content="https://worksheets.ikrambd.com/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Practice Hub — Worksheets to practise English">
+<meta property="og:image:alt" content="Worksheets to practise English">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Practice Hub · Worksheets">
+<meta name="twitter:title" content="Worksheets">
 <meta name="twitter:description" content="Worksheets to practise English.">
 <meta name="twitter:image" content="https://worksheets.ikrambd.com/og-image.png">
 <style>
@@ -171,8 +171,8 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offse
 </head>
 <body>
 <div class="splash" id="splash" aria-hidden="true">
-  <img class="logo" src="icon-192.png" alt="Practice Hub logo" width="108" height="108">
-  <div class="nm">Practice Hub</div>
+  <img class="logo" src="icon-192.png" alt="Worksheets logo" width="108" height="108">
+  <div class="nm">Worksheets</div>
   <div class="tag">Worksheets</div>
   <div class="dots"><i></i><i></i><i></i></div>
 </div>
@@ -323,32 +323,65 @@ const installState=$('#installState');
 const isStandalone=()=>window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone===true;
 
 window.addEventListener('beforeinstallprompt',e=>{ e.preventDefault(); window.__dip=e; });
-window.addEventListener('appinstalled',()=>{ window.__dip=null; installState.textContent='Worksheets is installed. Open it from your home screen.'; toast('Installed.'); });
+window.addEventListener('appinstalled',()=>{
+  try{ localStorage.setItem('wsInstalled','1'); }catch(e){}
+  window.__dip=null;
+  installState.textContent='Worksheets is installed. Open it from your home screen.';
+  toast('Installed.');
+  const installTab=document.querySelector('[data-tab="install"]');
+  if(installTab) installTab.hidden=true;
+  const shareTab=document.querySelector('[data-tab="share"]');
+  if(shareTab) shareTab.click();
+});
 
 function autoInstall(){
-  if(isStandalone()){ installState.textContent='Worksheets is already installed.'; return; }
   const deferred=window.__dip;
+  let installedFlag=false;
+  try{ installedFlag=localStorage.getItem('wsInstalled')==='1'; }catch(e){}
+  // Only say "already installed" if we have evidence of a real install.
+  // This avoids the false positive when the page is opened from the hub
+  // (where display-mode can report standalone even though the app isn't installed).
+  if(installedFlag && isStandalone()){
+    installState.textContent='Worksheets is already installed. Open it from your home screen.';
+    return;
+  }
   if(deferred){
     installState.textContent='Installing Worksheets…';
     deferred.prompt();
     try{
       deferred.userChoice.then(r=>{
-        if(r && r.outcome==='accepted') installState.textContent='Worksheets is installed. Open it from your home screen.';
+        if(r && r.outcome==='accepted'){
+          installState.textContent='Worksheets is installed. Open it from your home screen.';
+          try{ localStorage.setItem('wsInstalled','1'); }catch(e){}
+          window.__dip=null;
+          const installTab=document.querySelector('[data-tab="install"]');
+          if(installTab) installTab.hidden=true;
+          const shareTab=document.querySelector('[data-tab="share"]');
+          if(shareTab) shareTab.click();
+        }
         window.__dip=null;
       }).catch(()=>{ window.__dip=null; });
     }catch(e){ window.__dip=null; }
   } else {
-    installState.textContent='Install is not available in this browser.';
+    installState.textContent='Tap ⋮ → Install app (or Add to Home screen).';
   }
 }
+
+// On load: if already installed, hide the install tab so Share is the visible option
+try{
+  if(localStorage.getItem('wsInstalled')==='1'){
+    const installTab=document.querySelector('[data-tab="install"]');
+    if(installTab) installTab.hidden=true;
+  }
+}catch(e){}
 
 /* share */
 const CANONICAL='https://worksheets.ikrambd.com/';
 let href=''; try{ href=location.href.split('#')[0]; }catch(e){}
 if(!href || href==='about:blank') href=CANONICAL;
 $('#url').value=href;
-const TITLE='Practice Hub · Worksheets';
-const shareText='Practice Hub: worksheets to practise English. ';
+const TITLE='Worksheets';
+const shareText='Worksheets to practise English. ';
 const eu=encodeURIComponent, euHref=eu(href), euTitle=eu(TITLE);
 
 $('#fb').href='https://www.facebook.com/sharer/sharer.php?u='+euHref;
