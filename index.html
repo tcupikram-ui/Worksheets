@@ -363,7 +363,24 @@ function autoInstall(){
       }).catch(()=>{ window.__dip=null; });
     }catch(e){ window.__dip=null; }
   } else {
-    installState.textContent='Tap ⋮ → Install app (or Add to Home screen).';
+    // beforeinstallprompt hasn't fired yet — wait briefly for it
+    installState.textContent='Preparing install…';
+    let done=false;
+    const onPrompt=(e)=>{
+      if(done) return;
+      done=true;
+      window.removeEventListener('beforeinstallprompt', onPrompt);
+      e.preventDefault();
+      window.__dip=e;
+      autoInstall();   // re-run now that the prompt is available
+    };
+    window.addEventListener('beforeinstallprompt', onPrompt);
+    setTimeout(()=>{
+      if(done) return;
+      done=true;
+      window.removeEventListener('beforeinstallprompt', onPrompt);
+      installState.textContent='Tap ⋮ → Install app (or Add to Home screen).';
+    }, 2500);
   }
 }
 
@@ -405,8 +422,8 @@ $('#native').onclick=async()=>{
 window.addEventListener('load',()=>{
   const s=$('#splash');
   if(s){ setTimeout(()=>{ s.classList.add('off'); setTimeout(()=>s.remove(),650); },1100); }
-  if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js').catch(()=>{}); }
 });
+if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js').catch(()=>{}); }
 </script>
 </body>
 </html>
