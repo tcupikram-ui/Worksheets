@@ -242,7 +242,7 @@ const grid = $('#grid');
 for (let i=1;i<=TOTAL;i++){
   const b=document.createElement('button'); b.className='ws';
   b.innerHTML='<span class="n">'+String(i).padStart(2,'0')+'</span><span><h3>Worksheet '+i+'</h3>'+(TITLES[i]?'<div style="color:#1c4a80;font-size:.85rem">'+TITLES[i]+'</div>':'')+'<span class="badge">'+LOCK+'Locked</span></span>';
-  b.onclick=()=>{ if(LINKS[i]) window.open(LINKS[i],'_blank','noopener'); };
+  b.onclick=()=>{ if(LINKS[i]){ playSound(sndOpen); window.open(LINKS[i],'_blank','noopener'); } else { playSound(sndClose); } };
   grid.appendChild(b);
 }
 $('#count').textContent=TOTAL;
@@ -288,8 +288,7 @@ function playSound(snd){
 }
 function show(id){
   if(id===currentTab) return;
-  playSound(sndClose);
-  setTimeout(()=>playSound(sndOpen), 90);
+  playSound(sndOpen);
   currentTab=id;
   tabs.forEach(t=>t.setAttribute('aria-selected',t.dataset.tab===id));
   document.querySelectorAll('.panel').forEach(p=>p.hidden=p.id!==id);
